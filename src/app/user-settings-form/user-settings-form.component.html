@@ -1,0 +1,80 @@
+<div class="container">
+  <h2>User Settings</h2>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <!-- ngNativeValidate -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" name="name" class="form-control" [(ngModel)]="userSettings.name"
+        [class.field-error]='form.submitted && nameField.invalid' #nameField='ngModel' (blur)="onBlur(nameField)"
+        required>
+      <div class="alert alert-danger" [hidden]='!form.submitted||nameField.valid'>
+        Please enter a name
+      </div>
+      <!-- <h3>dirty: {{nameField.dirty}}</h3>
+      <h3>pristine: {{nameField.pristine}}</h3>
+      <h3>touched: {{nameField.touched}}</h3>
+      <h3>untouched: {{nameField.untouched}}</h3>
+      <h3>valid: {{nameField.valid}}</h3>
+      <h3>invalid: {{nameField.invalid}}</h3> -->
+
+    </div>
+    <!-- <div class="form-group">
+      <button type="button" class="btn btn-primary" name="singleModel" [(ngModel)]="singleModel" btnCheckbox
+        btnCheckboxTrue="On" btnCheckboxFalse="Off">
+        {{singleModel}}
+      </button>
+    </div> -->
+    <div class="form-check form-group">
+      <input class="form-check-input" type="checkbox" id="emailOffers" name="emailOffers"
+        [(ngModel)]="userSettings.emailOffers">
+      <label class="form-check-label" for="emailOffers">Email Special Offers</label>
+    </div>
+    <div class="form-group">
+      <p>Interface Style</p>
+      <div class="btn-group">
+        <label class="btn btn-primary" name='interfaceStyle' [(ngModel)]="userSettings.interfaceStyle" btnRadio="Light"
+          tabindex="0" role="button">Light</label>
+        <label class="btn btn-primary" name='interfaceStyle' [(ngModel)]="userSettings.interfaceStyle" btnRadio="Medium"
+          tabindex="0" role="button">Medium</label>
+        <label class="btn btn-primary" name='interfaceStyle' [(ngModel)]="userSettings.interfaceStyle" btnRadio="Dark"
+          tabindex="0" role="button">Dark</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="subscriptionType">Subscription Type</label>
+      <select class="form-control" id="subscriptionType" name="subscriptionType"
+        [(ngModel)]="userSettings.subscriptionType">
+        <option selected></option>
+        <option *ngFor='let type of subscriptionTypes | async'>
+          {{type}}
+        </option>
+      </select>
+      <div class="btn-group" dropdown>
+        <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+          aria-controls="dropdown-animated">
+          Subscription Types <span class="caret"></span>
+        </button>
+        <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+          <li role="menuitem" *ngFor='let type of subscriptionTypes | async'>
+            <a class="dropdown-item" href="#">{{type}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input id="startDate" name="startDate" [(ngModel)]="userSettings.startDate" type="text" placeholder="Pcik a Date"
+        class="form-control" bsDatepicker [bsConfig]="{ isAnimated: true }">
+    </div>
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea class="form-control" name="notes" id="notes" rows="3" [(ngModel)]="userSettings.notes"></textarea>
+    </div>
+    <div class="alert alert-danger" [hidden]="!postError">
+      {{postErrorMessage}}
+    </div>
+    <button class="btn btn-outline-primary">Send</button>
+  </form>
+</div>
+<!-- <h3>{{ originalUserSettings | json}}</h3>
+<h3>{{ userSettings | json}}</h3> -->
